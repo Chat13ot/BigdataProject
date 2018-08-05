@@ -42,7 +42,7 @@ driver = wd.Chrome(executable_path='chromedriver.exe')
 driver.get(main_url)
 
 html = bs(driver.page_source, "lxml")
-
+ 
 links = driver.find_elements_by_css_selector('.pup_title a')
 
 seed_url = []
