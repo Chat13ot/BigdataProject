@@ -1,2 +1,2 @@
 # ICIS
-> Integrated Child Care Informatioin System 
+> Integrated Child Care Information System
