@@ -1,6 +1,6 @@
 import elasticsearch
 import json
-from flask import Flask, request
+from flask import Flask, request, redirect
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
@@ -22,20 +22,7 @@ app.config['SECURITY_SEND_REGISTER_EMAIL'] = False
 app.config['WTF_CSRF_SECRET_KEY'] = 'icissecrete'
 
 
-
 db = SQLAlchemy(app)
-
-
-roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
-
-
-class Role(db.Model, RoleMixin):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(255))
-
 
 class User(db.Model, UserMixin):
     seq = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -43,60 +30,26 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=False)
     babyName = db.Column(db.String(255), nullable=False)
     birthDate = db.Column(db.Date, nullable=False)
-    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
-    # 입력받을 사용자 정보는 여기다 추가하면됨.
+
+
+class Role(db.Model, RoleMixin):
+    seq = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.String(100), unique=True, nullable=False)
+    milkpowder = db.Column(db.String(100))
+    diaper = db.Column(db.String(100))
+    toy = db.Column(db.String(100))
+    snack = db.Column(db.String(100))
 
 
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
-class UserForm(Form):
+
+class UserForm(FlaskForm):
     id = StringField('id', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired()])
     babyName = StringField('babyName', validators=[DataRequired()])
-    birthDate = DateField('birthDate', validators=[DataRequired()])
-
-@app.route('/preference', methods=['POST','GET'])
-def insert():
-
-    userform = UserForm(FlaskForm)
-
-    if request.method == 'POST':
-        id = request.form['id']
-        password = request.form['password']
-        babyName = request.form['babyName']
-        birthDate = request.form['birthDate'].split('-')
-
-        print(id, password, babyName, birthDate)
-
-        # User DB에 넣기
-        user = User()
-        user.id = id
-        user.password = password
-        user.babyName = babyName
-        user.birthDate = datetime.date(int(birthDate[0]), int(birthDate[1]), int(birthDate[2]))
-
-        db.session.add(user)
-        db.session.commit()
-
-        return render_template('preference.html')
-
-    # if request.method == 'POST':
-    #     print('post!!!!!!!!!1')
-    #     if userform.validate_on_submit():
-    #         print(userform)
-    #         print('된다!!!')
-    #     else:
-    #         print(userform)
-    #         print(userform.id._value())
-    #         print(userform.password._value())
-    #         print(userform.babyName._value())
-    #         print(userform.birthDate._value())
-
-
-    # if form.validate_on_submit():
-    #     print(form)
-    #     return render_template('index.html')
+    birthDate = DateField('birthDate', format="%m/%d/%Y", validators=[DataRequired()])
 
 
 @app.route('/')
@@ -143,26 +96,53 @@ def search():
 
 @app.route('/register', methods=['POST','GET'])
 def register():
-    userform = UserForm(FlaskForm)
+    userform = UserForm()
 
-    if request.method == 'GET':
-        if userform.validate_on_submit():
-            print('응어차피get안써')
+    if request.method == 'POST':
 
-        return render_template('register.html', form = userform)
+        # User DB에 넣기
+        user = User()
+        user.id = userform.id._value()
+        user.password = userform.password._value()
+        user.babyName = userform.babyName._value()
+        birthDate = userform.birthDate._value().split('/')
 
-    else: ## method = 'POST'
-        if userform.validate_on_submit():
-            return render_template('preference.html')
+        user.birthDate = datetime.date(int(birthDate[2]), int(birthDate[0]), int(birthDate[1]))
 
-        print(userform.id._value())
-        print(userform.birthDate._value())
+        db.session.add(user)
+        db.session.commit()
+        return render_template('preference.html', user = user.id)
 
-        return render_template('register.html', form=userform)
+    return render_template('register.html', form=userform)
 
-@app.route('/prefer')
+
+@app.route('/prefer', methods=['POST','GET'])
 def prefer():
+
+    if request.method == 'POST':
+        user_id = request.form['user_id']
+        milkpowder = request.form['milkpowder']
+        diaper = request.form['diaper']
+        toy = request.form['toy']
+        snack = request.form['snack']
+
+        print(user_id, milkpowder, diaper, toy, snack)
+
+        role = Role()
+        role.user_id = user_id
+        role.milkpowder = milkpowder
+        role.diaper = diaper
+        role.toy = toy
+        role.snack = snack
+
+        db.session.add(role)
+        db.session.commit()
+
+        return redirect('/')
+
     return render_template('preference.html')
+
 
 if __name__ == '__main__':
     app.run()
+
