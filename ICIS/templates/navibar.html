@@ -112,7 +112,7 @@
 {#									<div class="search-icon fa fa-search"></div>#}
 {#									<div class="product-search restrain">#}
 										<div class="container nopadding-right">
-											<form action="{{ url_for('search') }}" id="search" method="post">
+											<form action="{{ url_for('search', page=1) }}" id="search" method="post">
 												<div class="input-group">
 													<input type="search" class="form-control" maxlength="128" placeholder="상품 정보 입력..." name="search">
 													<span class="input-group-btn">
