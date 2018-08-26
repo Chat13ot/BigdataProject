@@ -340,7 +340,7 @@
 					<div class="col-md-8 col-sm-8 col-xs-12 nopadding">
 						<!-- single banner start -->
 						<div class="single-banner single-big">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-1.jpg') }}" alt="" /></a>
+							<a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/banner/home8-banner-1.jpg') }}" alt="" /></a>
 						</div>
 						<!-- single banner end -->
 					</div>
@@ -369,43 +369,4 @@
 				</div>
 			</div>
 		</div>
-		<!-- unit banner area end -->
-        <!-- perfect service area start -->
-		<div class="perfect-service">
-			<div class="container">
-				<div class="row">
-					<div class="creative-banner">
-						<div class="col-md-4 creative-info">
-							<div class="creative-icon">
-								<i class="fa fa-plane"></i>
-							</div>
-							<div class="creative-text">
-								<h3>FREE SHIPPING ALL ORDER</h3>
-								<p>Free Shipping on many order (3-5 bussiness days). Return after 30 days.</p>
-							</div>
-						</div>
-						<div class="col-md-4 creative-info">
-							<div class="creative-icon">
-								<i class="fa fa-history "></i>
-							</div>
-							<div class="creative-text">
-								<h3>24/07 SUPPORT HOUR</h3>
-								<p>Support Chanel is open 24/07 and ready to offer quality services.</p>
-							</div>
-						</div>
-						<div class="col-md-4 creative-info">
-							<div class="creative-icon">
-								<i class="fa fa-lightbulb-o"></i>
-							</div>
-							<div class="creative-text">
-								<h3>UNIQUE PRODUCTS</h3>
-								<p>We bring to you the best products with unique design, trending and the best quality.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- perfect service area end -->
-
 {% endblock content %}
