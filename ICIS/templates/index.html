@@ -359,12 +359,39 @@
 						</div>
 						<!-- single banner end -->
 					</div>
-					<div class="col-md-8 col-sm-8 col-xs-12 mrg-tm nopadding">
+                    <div class="col-md-8 col-sm-8 col-xs-12 mrg-tm">
 						<!-- single banner start -->
-						<div class="single-banner single-big-btm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-4.jpg') }}" alt="" /></a>
-						</div>
-						<!-- single banner end -->
+{#                        <div id="map" class="single-banner single-big-btm"></div>#}
+                        <div id="map" class="single-banner single-big-btm" style="width:1246px;height:530px;"></div>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d09b8d66ce7e1980c5da475e82170c0"></script>
+                        <script>
+                            var container = document.getElementById('map');
+                            var options = {
+                                center: new daum.maps.LatLng(33.450701, 126.570667),
+                                level: 3
+                            };
+
+                            var map = new daum.maps.Map(container, options);
+
+                            var marker = new daum.maps.Marker({
+                                position: new daum.maps.LatLng(33.450701, 126.570667),
+                                clickable: true
+                            });
+
+                            marker.setMap(map);
+
+                            var iwContent = '<div style="padding:5px;">꿈의직장!!!</div>';
+                            var iwRemoveable = true;
+
+                            var infowindow = new daum.maps.InfoWindow({
+                                content : iwContent,
+                                removable : iwRemoveable
+                            });
+
+                            daum.maps.event.addListener(marker, 'click', function() {
+                                infowindow.open(map, marker);
+                            });
+                        </script>
 					</div>
 				</div>
 			</div>
