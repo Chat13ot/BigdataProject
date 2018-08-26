@@ -5,15 +5,6 @@
         <!-- Add your site or application content here -->
 		<!-- header area start -->
 		<header>
-            <!--register.html 에서 datepicker 부분-->
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-            <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-            <script>
-            $(function() {
-                $( ".dtpick" ).datepicker();
-            });
-            </script>
 			<div class="container-fluid">
 				<div class="row">
 					<!-- logo start -->
@@ -121,13 +112,7 @@
 {#									<div class="search-icon fa fa-search"></div>#}
 {#									<div class="product-search restrain">#}
 										<div class="container nopadding-right">
-											<form action="{{ url_for('search', page=1) }}" id="search" method="post">
-												<div class="input-group">
-													<input type="search" class="form-control" maxlength="128" placeholder="상품 정보 입력..." name="search">
-													<span class="input-group-btn">
-														<button type="submit" class="btn btn-default fa fa-search" style="width:80px; line-height: 48px;"><img src="{{ url_for('static', filename='img/search_2.png') }}" alt="" /></button>
-													</span>
-												</div>
+											<form action="{{ url_for('search') }}" id="search" method="post">
 											</form>
 										</div>
 									</div>

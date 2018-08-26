@@ -107,13 +107,19 @@ venv.bak/
 ### VirtualEnv template
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+<<<<<<< HEAD
 .Python
+=======
+>>>>>>> SoojungKim
 [Bb]in
 [Ii]nclude
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
+<<<<<<< HEAD
 [Ss]cripts
+=======
+>>>>>>> SoojungKim
 pyvenv.cfg
 .venv
 pip-selfcheck.json
