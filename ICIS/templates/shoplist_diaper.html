@@ -771,11 +771,25 @@
                                     <div class="pages">
                                         <label>Page:</label>
                                         <ul>
-                                            <li class="current"><a href="{{ url_for('productList_diaper', page=1) }}">1</a></li>
-                                            {%- for i in range(pageCount-1) %}
-                                            <li><a href="{{ url_for('productList_diaper', page=(i + 2)) }}">{{ i + 2 }}</a></li>
-                                            {%- endfor %}
-                                            <li><a href="#" class="next i-next" title="Next"><i class="fa fa-arrow-right"></i></a></li>
+                                            {%- if currentpage < 10 and pageCount > 10 %}
+                                                <li><a href="{{ url_for('search', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
+                                                <li class="current"><a href="{{ url_for('search', page=1) }}">1</a></li>
+                                                {%- for i in range(pageCount-11) %}
+                                                    <li><a href="{{ url_for('search', page=(i + 2)) }}">{{ i + 2 }}</a></li>
+                                                {%- endfor %}
+                                                <li><a href="{{ url_for('search', page=11) }}" class="next i-next" title="Next"><i class="fa fa-arrow-right"></i></a></li>
+                                            {%- elif currentpage > 9 and pageCount > 10 %}
+                                                <li><a href="{{ url_for('search', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
+                                                {%- for i in range(pageCount-10) %}
+                                                    <li><a href="{{ url_for('search', page=(i + 11)) }}">{{ (i + 11) }}</a></li>
+                                                {%- endfor %}
+                                            {%- elif pageCount < 10 %}
+                                                <li><a href="{{ url_for('search', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
+                                                <li class="current"><a href="{{ url_for('search', page=1) }}">1</a></li>
+                                                {%- for i in range(pageCount-1) %}
+                                                    <li><a href="{{ url_for('search', page=(i + 2)) }}">{{ i + 2 }}</a></li>
+                                                {%- endfor %}
+                                            {%- endif %}
                                         </ul>
                                     </div>
                                 </div>

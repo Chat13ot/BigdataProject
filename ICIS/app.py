@@ -195,6 +195,8 @@ def search(page=None):
         else:
             pageCount = int(resultCount / 12) + 1
 
+        print(pageCount)
+
         return render_template('searchresult.html',
                                titles=titles[12 * (pageIndex-1): 12 * pageIndex],
                                imgs=imgs[12 * (pageIndex-1): 12 * pageIndex],
