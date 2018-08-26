@@ -51,47 +51,122 @@ class UserForm(FlaskForm):
     babyName = StringField('babyName', validators=[DataRequired()])
     birthDate = DateField('birthDate', format="%m/%d/%Y", validators=[DataRequired()])
 
+totalnums = []
+titles = []
+imgs = []
+prices = []
+urls = []
+pageCount = 0
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+def productView(type=None):
+    doc = es_client.search(index=type, body={
+        "query": {
+            "bool": {
+                "must_not": [
+                    {
+                        "match": {
+                            "title": "."
+                        }
+                    }
+                ]
+            }
+        }
+        , "sort": [
+            {
+                "rating": {
+                    "order": "desc"
+                }
+            }
+        ]
+    }, size=240)
+
+    return doc
 
 
-@app.route('/shop-grid')
-def shop_grid():
-    return render_template('shop-grid.html')
-
-
-@app.route('/search', methods=['POST'])
-def search():
-    titles = []
-    imgs = []
-    prices = []
-
-    search_term = request.form['search']
+def productSearch(search_term=None):
     doc = es_client.search(index='_all', body={
         "query": {
             "match_phrase": {
                 "title": search_term
             }
         }
-    }, size=999)
+    }, size=240)
 
-    resultCount = len(doc['hits']['hits'])
+    return doc
 
-    # for i in range(resultCount):
-    #     print(json.dumps(doc['hits']['hits'][i]['_source'], ensure_ascii=False, indent=2))
+@app.route('/')
+def index():
+    doc_diaper = productView('diaper')
+    totalnums.append(doc_diaper['hits']['total'])
 
-    for i in range(resultCount):
-        titles.append(doc['hits']['hits'][i]['_source']['title'])
+    doc_milkpowder = productView('milkpowder')
+    totalnums.append(doc_milkpowder['hits']['total'])
 
-    for i in range(resultCount):
-        imgs.append(doc['hits']['hits'][i]['_source']['img'])
+    doc_snack = productView('snack')
+    totalnums.append(doc_snack['hits']['total'])
 
-    for i in range(resultCount):
-        prices.append(str(doc['hits']['hits'][i]['_source']['price']) + '원')
+    doc_toy = productView('toy')
+    totalnums.append(doc_toy['hits']['total'])
 
-    return render_template('shop-grid.html', titles=titles, imgs=imgs, prices=prices)
+    return render_template('index.html')
+
+
+@app.route('/shop-grid')
+def shop_grid():
+    return render_template('shoplist_diaper.html')
+
+@app.route('/search/<page>', methods=['GET', 'POST'])
+def search(page=None):
+    pageIndex = int(page)
+
+    if request.method == 'POST':
+        search_term = request.form['search']
+
+        doc = productSearch(search_term)
+
+        resultCount = len(doc['hits']['hits'])
+
+        global titles
+        global imgs
+        global prices
+        global urls
+        titles = []
+        imgs = []
+        prices = []
+        urls = []
+
+        for item in doc['hits']['hits']:
+            titles.append(item['_source']['title'])
+            imgs.append(item['_source']['img'])
+            prices.append(str(item['_source']['price']) + '원')
+            urls.append(item['_source']['link'])
+
+        global pageCount
+        if resultCount % 12 == 0:
+            pageCount = int(resultCount / 12)
+        else:
+            pageCount = int(resultCount / 12) + 1
+
+        print(pageCount)
+
+        return render_template('searchresult.html',
+                               titles=titles[12 * (pageIndex-1): 12 * pageIndex],
+                               imgs=imgs[12 * (pageIndex-1): 12 * pageIndex],
+                               prices=prices[12 * (pageIndex-1): 12 * pageIndex],
+                               urls=urls[12 * (pageIndex-1): 12 * pageIndex],
+                               currentpage=pageIndex-1,
+                               totalnum=totalnums,
+                               pageCount=pageCount)
+
+    else:
+        return render_template('searchresult.html',
+                               titles=titles[12 * (pageIndex - 1):12 * pageIndex],
+                               imgs=imgs[12 * (pageIndex - 1):12 * pageIndex],
+                               prices=prices[12 * (pageIndex - 1):12 * pageIndex],
+                               urls=urls[12 * (pageIndex - 1):12 * pageIndex],
+                               currentpage=pageIndex - 1,
+                               totalnum=totalnums,
+                               pageCount=pageCount)
 
 
 @app.route('/register', methods=['POST','GET'])
@@ -115,6 +190,161 @@ def register():
 
     return render_template('register.html', form=userform)
 
+@app.route('/products/diaper/<page>')
+def productList_diaper(page=None):
+    pageIndex = int(page)
+
+    global titles
+    global imgs
+    global prices
+    global urls
+
+    titles = []
+    imgs = []
+    prices = []
+    urls = []
+
+    doc_diaper = productView('diaper')
+
+    for item in doc_diaper['hits']['hits']:
+        titles.append(item['_source']['title'])
+        imgs.append(item['_source']['img'])
+        prices.append(str(item['_source']['price']) + '원')
+        urls.append(item['_source']['link'])
+
+    resultCount = len(doc_diaper['hits']['hits'])
+    global pageCount
+    if resultCount % 12 == 0:
+        pageCount = int(resultCount / 12)
+    else:
+        pageCount = int(resultCount / 12) + 1
+
+    return render_template('shoplist_diaper.html',
+                           titles=titles[12 * (pageIndex - 1): 12 * pageIndex],
+                           imgs=imgs[12 * (pageIndex - 1): 12 * pageIndex],
+                           prices=prices[12 * (pageIndex - 1): 12 * pageIndex],
+                           urls=urls[12 * (pageIndex - 1): 12 * pageIndex],
+                           currentpage=pageIndex - 1,
+                           totalnum=totalnums,
+                           pageCount=pageCount)
+
+
+@app.route('/products/milkpowder/<page>')
+def productList_milkpowder(page=None):
+    pageIndex = int(page)
+
+    global titles
+    global imgs
+    global prices
+    global urls
+
+    titles = []
+    imgs = []
+    prices = []
+    urls = []
+
+    doc_milkpowder = productView('milkpowder')
+
+    for item in doc_milkpowder['hits']['hits']:
+        titles.append(item['_source']['title'])
+        imgs.append(item['_source']['img'])
+        prices.append(str(item['_source']['price']) + '원')
+        urls.append(item['_source']['link'])
+
+    resultCount = len(doc_milkpowder['hits']['hits'])
+    global pageCount
+    if resultCount % 12 == 0:
+        pageCount = int(resultCount / 12)
+    else:
+        pageCount = int(resultCount / 12) + 1
+
+    return render_template('shoplist_milkpowder.html',
+                           titles=titles[12 * (pageIndex - 1): 12 * pageIndex],
+                           imgs=imgs[12 * (pageIndex - 1): 12 * pageIndex],
+                           prices=prices[12 * (pageIndex - 1): 12 * pageIndex],
+                           urls=urls[12 * (pageIndex - 1): 12 * pageIndex],
+                           currentpage=pageIndex - 1,
+                           totalnum=totalnums,
+                           pageCount=pageCount)
+
+
+@app.route('/products/snack/<page>')
+def productList_snack(page=None):
+    pageIndex = int(page)
+
+    global titles
+    global imgs
+    global prices
+    global urls
+
+    titles = []
+    imgs = []
+    prices = []
+    urls = []
+
+    doc_snack = productView('snack')
+
+    for item in doc_snack['hits']['hits']:
+        titles.append(item['_source']['title'])
+        imgs.append(item['_source']['img'])
+        prices.append(str(item['_source']['price']) + '원')
+        urls.append(item['_source']['link'])
+
+    resultCount = len(doc_snack['hits']['hits'])
+    global pageCount
+    if resultCount % 12 == 0:
+        pageCount = int(resultCount / 12)
+    else:
+        pageCount = int(resultCount / 12) + 1
+
+    return render_template('shoplist_snack.html',
+                           titles=titles[12 * (pageIndex - 1): 12 * pageIndex],
+                           imgs=imgs[12 * (pageIndex - 1): 12 * pageIndex],
+                           prices=prices[12 * (pageIndex - 1): 12 * pageIndex],
+                           urls=urls[12 * (pageIndex - 1): 12 * pageIndex],
+                           currentpage=pageIndex - 1,
+                           totalnum=totalnums,
+                           pageCount=pageCount)
+
+
+
+@app.route('/products/toy/<page>')
+def productList_toy(page=None):
+    pageIndex = int(page)
+
+    global titles
+    global imgs
+    global prices
+    global urls
+
+    titles = []
+    imgs = []
+    prices = []
+    urls = []
+
+    doc_toy = productView('toy')
+
+    for item in doc_toy['hits']['hits']:
+        titles.append(item['_source']['title'])
+        imgs.append(item['_source']['img'])
+        prices.append(str(item['_source']['price']) + '원')
+        urls.append(item['_source']['link'])
+
+    resultCount = len(doc_toy['hits']['hits'])
+    global pageCount
+    if resultCount % 12 == 0:
+        pageCount = int(resultCount / 12)
+    else:
+        pageCount = int(resultCount / 12) + 1
+
+    return render_template('shoplist_toy.html',
+                           titles=titles[12 * (pageIndex - 1): 12 * pageIndex],
+                           imgs=imgs[12 * (pageIndex - 1): 12 * pageIndex],
+                           prices=prices[12 * (pageIndex - 1): 12 * pageIndex],
+                           urls=urls[12 * (pageIndex - 1): 12 * pageIndex],
+                           currentpage=pageIndex - 1,
+                           totalnum=totalnums,
+                           pageCount=pageCount)
 
 @app.route('/prefer', methods=['POST','GET'])
 def prefer():
