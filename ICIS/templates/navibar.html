@@ -29,23 +29,32 @@
 						<div class="top-detail">
 							<!-- language division start -->
 							<div class="disflow">
-								<div class="expand lang-all disflow">
-									<a href="{{ url_for('login') }}">Log in</a>
-{#									<ul class="restrain language">#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/it.gif') }}" alt="">italiano</a></li>#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/nl_nl.gif') }}" alt="">Nederlands</a></li>#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/de_de.gif') }}" alt="">Deutsch</a></li>#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/en.gif') }}" alt="">English</a></li>#}
-{#									</ul>#}
-								</div>
-								<div class="expand lang-all disflow">
-									<a href="{{ url_for('register') }}">Join</a>
-{#									<ul class="restrain language">#}
-{#										<li><a href="#">€ Eur</a></li>#}
-{#										<li><a href="#">$ USD</a></li>#}
-{#										<li><a href="#">£ GBP</a></li>#}
-{#									</ul>#}
-								</div>
+                                 {% if id  %}
+                                         <div class="expand lang-all disflow">
+                                             <a >{{ id }} 님 안녕하세요!</a>
+                                         </div>
+                                         <div class="expand lang-all disflow">
+                                             <a href="{{ url_for('logout') }}">Logout</a>
+                                         </div>
+
+                                         {% else %}
+
+                                         <div class="expand lang-all disflow">
+                                             <a href="{{ url_for('login') }}">Log in</a>
+                                         </div>
+                                         <div class="expand lang-all disflow">
+                                             <a href="{{ url_for('register') }}">Join</a>
+                                         </div>
+
+                                 {% endif %}
+
+
+{#								<div class="expand lang-all disflow">#}
+{#                                    <a href="{{ url_for('login') }}">Log in</a>#}
+{#								</div>#}
+{#								<div class="expand lang-all disflow">#}
+{#									<a href="{{ url_for('register') }}">Join</a>#}
+{#								</div>#}
 							</div>
 							<!-- language division end -->
 							<!-- addcart top start -->

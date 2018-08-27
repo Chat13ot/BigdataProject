@@ -14,7 +14,6 @@ app = Flask(__name__)
 es_client = elasticsearch.Elasticsearch('localhost:9200')
 
 
-
 app.secret_key = 'icis secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -110,7 +109,6 @@ def index():
     #
     # doc_toy = productView('toy')
     # totalnums.append(doc_toy['hits']['total'])
-
     return render_template('index.html')
 
 
@@ -383,22 +381,68 @@ def regVisitor():
     print('lat: {0}, lng: {1}'.format(lat,lng))
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login/11', methods=['GET','POST'])
 def login():
-    # if request.method == 'POST':
-    #     userId = request.form['id']
-    #     wp = request.form['wp']
-    #     if len(userId) == 0 or len(wp) == 0:
-    #         return userId+', '+wp+' 로그인 정보를 제대로 입력하지 않았습니다.'
-    #         session['logFlag'] = True
-    #         session['userId'] = userId
-    #         return session['userId'] + ' 님 환영합니다.'
-    #     else:
-    #         return '잘못된 접근입니다.'
-    # app.secret_key = 'sample_secreat_key'
+    if request.method == 'POST':
+        userId = request.form['id']
+        pwd = request.form['password']
+        if len(userId) == 0 or len(pwd) == 0:
+            return userId+', '+pwd+' 로그인 정보를 제대로 입력하지 않았습니다.'
+        else:
+            session['logFlag'] = True
+            session['userId'] = userId
 
-    return render_template('register.html')
+            user_pre= Role.query.filter_by(user_id=session['userId']).first()
 
+            u_birthDate = User.query.filter_by(id=session['userId']).first().birthDate
+            y = u_birthDate.year
+            m = u_birthDate.month
+            d = u_birthDate.day
+            birth = datetime.datetime(y,m,d)
+            now=datetime.datetime.now()
+
+            u_age = int((now-birth).days /30)
+            u_milkpowder = user_pre.milkpowder
+            u_diaper = user_pre.diaper
+            u_toy = user_pre.toy
+            u_snack = user_pre.snack
+
+            ## 로그인되어있는 유저정보
+            session['user_age'] = u_age
+            session['user_milkpowder'] = u_milkpowder
+            session['user_diaper'] = u_diaper
+            session['user_toy'] = u_toy
+            session['u_sanck'] = u_snack
+
+            print(u_age)
+            return render_template('index.html', id=session['userId'])
+
+    app.secret_key = 'sample_secreat_key'
+
+
+    return render_template('login.html')
+
+
+@app.route('/user', methods=['GET'])
+def getUser():
+    if session.get('logFlag') != True:
+        return '잘못된 접근입니다.'
+
+    userId = session['userId']
+    user_age = session['user_age']
+    user_milkpowder = session['user_milkpowder']
+    user_diaper = session['user_diaper']
+    user_toy = session['user_toy']
+    u_sanck = session['u_sanck']
+
+    global user_info
+    user_info= [userId, user_age, user_milkpowder, user_diaper, user_toy, u_sanck]
+    return '[USER INFORMATION] USER ID : {0}'.format(user_info)
+
+@app.route('/logout')
+def logout():
+    session['userId'] = 0
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run()
