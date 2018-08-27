@@ -35,20 +35,20 @@
                         <aside class="widge-topbar">
                             <div class="bar-title">
                                 <div class="bar-ping"><img src="{{ url_for('static', filename='img/bar-ping.png') }}" alt=""></div>
-                                <h2>육아용품</h2>
+                                <h2>공연 / 전시</h2>
                             </div>
                         </aside>
-                        <aside class="sidebar-content">
-                            <div class="sidebar-title">
-                                <h6>Categories</h6>
-                            </div>
-                            <ul class="sidebar-tags">
-                                <li><a href="{{ url_for('productList_diaper', page=1) }}">기저귀</a><span> ({{ totalnum[0] }})</span></li>
-                                <li><a href="{{ url_for('productList_milkpowder', page=1) }}">분유</a><span> ({{ totalnum[1] }})</span></li>
-                                <li><a href="{{ url_for('productList_snack', page=1) }}">과자</a><span> ({{ totalnum[2] }})</span></li>
-                                <li><a href="{{ url_for('productList_toy', page=1) }}">장난감</a><span> ({{ totalnum[3] }})</span></li>
-                            </ul>
-                        </aside>
+{#                        <aside class="sidebar-content">#}
+{#                            <div class="sidebar-title">#}
+{#                                <h6>Categories</h6>#}
+{#                            </div>#}
+{#                            <ul class="sidebar-tags">#}
+{#                                <li><a href="{{ url_for('productList_diaper', page=1) }}">기저귀</a><span> ({{ totalnum[0] }})</span></li>#}
+{#                                <li><a href="{{ url_for('productList_milkpowder', page=1) }}">분유</a><span> ({{ totalnum[1] }})</span></li>#}
+{#                                <li><a href="{{ url_for('productList_snack', page=1) }}">과자</a><span> ({{ totalnum[2] }})</span></li>#}
+{#                                <li><a href="{{ url_for('productList_toy', page=1) }}">장난감</a><span> ({{ totalnum[3] }})</span></li>#}
+{#                            </ul>#}
+{#                        </aside>#}
 {#                        <aside class="sidebar-content">#}
 {#                            <div class="sidebar-title">#}
 {#                                <h6>Availability</h6>#}
@@ -772,22 +772,22 @@
                                         <label>Page:</label>
                                         <ul>
                                             {%- if currentpage < 10 and pageCount > 10 %}
-                                                <li><a href="{{ url_for('productList_toy', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
-                                                <li class="current"><a href="{{ url_for('productList_toy', page=1) }}">1</a></li>
+                                                <li><a href="{{ url_for('activityList', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
+                                                <li class="current"><a href="{{ url_for('activityList', page=1) }}">1</a></li>
                                                 {%- for i in range(9) %}
-                                                    <li><a href="{{ url_for('productList_toy', page=(i + 2)) }}">{{ i + 2 }}</a></li>
+                                                    <li><a href="{{ url_for('activityList', page=(i + 2)) }}">{{ i + 2 }}</a></li>
                                                 {%- endfor %}
-                                                <li><a href="{{ url_for('productList_toy', page=11) }}" class="next i-next" title="Next"><i class="fa fa-arrow-right"></i></a></li>
+                                                <li><a href="{{ url_for('activityList', page=11) }}" class="next i-next" title="Next"><i class="fa fa-arrow-right"></i></a></li>
                                             {%- elif currentpage > 9 and pageCount > 10 %}
-                                                <li><a href="{{ url_for('productList_toy', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
+                                                <li><a href="{{ url_for('activityList', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
                                                 {%- for i in range(pageCount-10) %}
-                                                    <li><a href="{{ url_for('productList_toy', page=(i + 11)) }}">{{ (i + 11) }}</a></li>
+                                                    <li><a href="{{ url_for('activityList', page=(i + 11)) }}">{{ (i + 11) }}</a></li>
                                                 {%- endfor %}
                                             {%- elif pageCount < 10 %}
-                                                <li><a href="{{ url_for('productList_toy', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
-                                                <li class="current"><a href="{{ url_for('productList_toy', page=1) }}">1</a></li>
+                                                <li><a href="{{ url_for('activityList', page=1) }}" title="Prev"><i class="fa fa-arrow-left"></i></a></li>
+                                                <li class="current"><a href="{{ url_for('activityList', page=1) }}">1</a></li>
                                                 {%- for i in range(pageCount-1) %}
-                                                    <li><a href="{{ url_for('productList_toy', page=(i + 2)) }}">{{ i + 2 }}</a></li>
+                                                    <li><a href="{{ url_for('activityList', page=(i + 2)) }}">{{ i + 2 }}</a></li>
                                                 {%- endfor %}
                                             {%- endif %}
                                         </ul>

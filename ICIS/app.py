@@ -1,11 +1,13 @@
 import elasticsearch
 import datetime
+import sqlite3
 from flask import Flask, request, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 from flask_wtf import FlaskForm, Form
 from wtforms import StringField, PasswordField, DateField
 from wtforms.validators import DataRequired
+from sqlite3 import Error
 
 
 app = Flask(__name__)
@@ -62,34 +64,94 @@ prices = []
 urls = []
 pageCount = 0
 
+diseases = {
+    0: ['BCG', 'HBV'],
+    1: ['HBV'],
+    2: ['DTaP', 'Hib', 'IPV', 'PCV'],
+    4: ['DTaP', 'Hib', 'IPV', 'PCV'],
+    5: ['DTaP', 'Hib', 'IPV', 'PCV'],
+    6: ['DTaP', 'Hib', 'IPV', 'PCV', 'HBV'],
+    7: ['DTaP', 'Hib', 'IPV', 'PCV', 'HBV'],
+    8: ['DTaP', 'Hib', 'IPV', 'PCV', 'HBV'],
+    9: ['DTaP', 'Hib', 'IPV', 'PCV', 'HBV'],
+    10: ['DTaP', 'Hib', 'IPV', 'PCV', 'HBV'],
+    11: ['DTaP', 'Hib', 'IPV', 'PCV', 'HBV'],
+    12: ['Hib', 'MMR', 'PCV', 'JE', 'VAR'],
+    13: ['Hib', 'MMR', 'PCV', 'JE', 'VAR'],
+    14: ['Hib', 'MMR', 'PCV', 'JE', 'VAR'],
+    15: ['DTaP', 'Hib', 'MMR', 'PCV', 'JE', 'VAR'],
+    16: ['DTaP', 'JE'],
+    17: ['DTaP', 'JE'],
+    18: ['DTaP', 'JE'],
+    19: ['JE'],
+    20: ['JE'],
+    21: ['JE'],
+    22: ['JE'],
+    23: ['JE']
+}
+
+
+def create_connection(db_file):
+    try:
+        conn = sqlite3.connect(db_file)
+        return conn
+    except Error as e:
+        print(e)
+
+    return None
+
+
+def select_task(conn, id):
+    cur = conn.cursor()
+    cur.execute("SELECT birthDate FROM user WHERE id=?", (id,))
+
+    row = cur.fetchone()
+
+    return row
+
 
 def productView(type=None):
-    doc = es_client.search(index=type, body={
-        "query": {
-            "bool": {
-                "must_not": [
-                    {
-                        "match": {
-                            "title": "."
+    if type == 'activity':
+        doc = es_client.search(index=type, body={
+            "query": {
+                "bool": {
+                    "must_not": [
+                        {
+                            "match": {
+                                "title": "."
+                            }
                         }
-                    }
-                ]
-            }
-        }
-        , "sort": [
-            {
-                "rating": {
-                    "order": "desc"
+                    ]
                 }
             }
-        ]
-    }, size=240)
+        }, size=240)
+    else:
+        doc = es_client.search(index=type, body={
+            "query": {
+                "bool": {
+                    "must_not": [
+                        {
+                            "match": {
+                                "title": "."
+                            }
+                        }
+                    ]
+                }
+            }
+            , "sort": [
+                {
+                    "rating": {
+                        "order": "desc"
+                    }
+                }
+            ]
+        }, size=240)
 
     return doc
 
 
 def productSearch(search_term=None):
-    doc = es_client.search(index='_all', body={
+    doc = es_client.search(index=['diaper', 'milkpowder', 'snack', 'toy'], body={
         "query": {
             "match_phrase": {
                 "title": search_term
@@ -154,6 +216,14 @@ def index():
 
     doc_toy = productView('toy')
     totalnums.append(doc_toy['hits']['total'])
+
+    db = "/Users/keith_lee/PycharmProjects/ICIS/ICIS/user.db"
+    conn = create_connection(db)
+
+    with conn:
+        birthDate = select_task(conn, 'asdf')
+
+    print(birthDate[0])
 
     return render_template('index.html')
 
@@ -359,7 +429,6 @@ def productList_snack(page=None):
                            pageCount=pageCount)
 
 
-
 @app.route('/products/toy/<page>')
 def productList_toy(page=None):
     pageIndex = int(page)
@@ -390,6 +459,45 @@ def productList_toy(page=None):
         pageCount = int(resultCount / 12) + 1
 
     return render_template('shoplist_toy.html',
+                           titles=titles[12 * (pageIndex - 1): 12 * pageIndex],
+                           imgs=imgs[12 * (pageIndex - 1): 12 * pageIndex],
+                           prices=prices[12 * (pageIndex - 1): 12 * pageIndex],
+                           urls=urls[12 * (pageIndex - 1): 12 * pageIndex],
+                           currentpage=pageIndex - 1,
+                           totalnum=totalnums,
+                           pageCount=pageCount)
+
+
+@app.route('/activity/<page>')
+def activityList(page=None):
+    pageIndex = int(page)
+
+    global titles
+    global imgs
+    global prices
+    global urls
+
+    titles = []
+    imgs = []
+    prices = []
+    urls = []
+
+    doc_activity = productView('activity')
+
+    for item in doc_activity['hits']['hits']:
+        titles.append(item['_source']['title'])
+        imgs.append(item['_source']['image'])
+        prices.append(item['_source']['cost'])
+        urls.append(item['_source']['link'])
+
+    resultCount = len(doc_activity['hits']['hits'])
+    global pageCount
+    if resultCount % 12 == 0:
+        pageCount = int(resultCount / 12)
+    else:
+        pageCount = int(resultCount / 12) + 1
+
+    return render_template('activitylist.html',
                            titles=titles[12 * (pageIndex - 1): 12 * pageIndex],
                            imgs=imgs[12 * (pageIndex - 1): 12 * pageIndex],
                            prices=prices[12 * (pageIndex - 1): 12 * pageIndex],
