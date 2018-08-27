@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32fc2b3a-c064-4490-b838-48701c0e2ad0" name="Default" comment="github test">
-      <change afterPath="$PROJECT_DIR$/static/img/activity_banner.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/product_banner.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/activitylist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/searchresult.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/searchresult.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shoplist_diaper.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shoplist_diaper.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shoplist_milkpowder.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shoplist_milkpowder.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shoplist_snack.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shoplist_snack.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/shoplist_toy.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/shoplist_toy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user.db" beforeDir="false" />
-    </list>
+    <list default="true" id="32fc2b3a-c064-4490-b838-48701c0e2ad0" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ICIS$ICIS.coverage" NAME="ICIS Coverage Results" MODIFIED="1535359085918" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/ICIS$ICIS.coverage" NAME="ICIS Coverage Results" MODIFIED="1535368605303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -68,8 +54,11 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="8" column="43" lean-forward="true" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+            <state relative-caret-position="253">
+              <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -361,7 +350,21 @@
       <option name="project" value="LOCAL" />
       <updated>1535309105272</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="여러모로 자잘하게 구현함">
+      <created>1535368464530</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1535368464530</updated>
+    </task>
+    <task id="LOCAL-00008" summary="여러모로 자잘하게 구현함">
+      <created>1535368500585</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1535368500585</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -406,7 +409,8 @@
     <MESSAGE value="육아용품 초안 완료" />
     <MESSAGE value="github test" />
     <MESSAGE value="메인에 다음지도 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="메인에 다음지도 추가" />
+    <MESSAGE value="여러모로 자잘하게 구현함" />
+    <option name="LAST_COMMIT_MESSAGE" value="여러모로 자잘하게 구현함" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/templates/shop-grid.html">
@@ -445,6 +449,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -473,6 +480,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -701,8 +711,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="8" column="43" lean-forward="true" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+        <state relative-caret-position="253">
+          <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
