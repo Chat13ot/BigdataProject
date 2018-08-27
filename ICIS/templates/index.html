@@ -340,29 +340,33 @@
 					<div class="col-md-8 col-sm-8 col-xs-12 nopadding">
 						<!-- single banner start -->
 						<div class="single-banner single-big">
-							<a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/banner/home8-banner-1.jpg') }}" alt="" /></a>
+							<a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/product_banner.jpg') }}" alt="" /></a>
 						</div>
 						<!-- single banner end -->
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-12 mrg-tm nopadding">
 						<!-- single banner start -->
 						<div class="single-banner sn-sm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-2.jpg') }}" alt="" /></a>
+							<a href="{{ url_for('activityList', page=1) }}"><img src="{{ url_for('static', filename='img/activity_banner.jpg') }}" alt="" /></a>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-xs-12 nopadding">
 						<!-- single banner start -->
-						<div class="single-banner sn-sm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-3.jpg') }}" alt="" /></a>
+						<div class="single-banner sn-sm" style="text-align: center">
+                            <label><h2>질병별 분류</h2></label>
+{#                            <ul>#}
+{#                                <li><a href="{{ url_for('diseaseList', id='asdf') }}">ㅎㅇ</a></li>#}
+{#                            </ul>#}
+{#							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-3.jpg') }}" alt="" /></a>#}
 						</div>
 						<!-- single banner end -->
 					</div>
                     <div class="col-md-8 col-sm-8 col-xs-12 mrg-tm">
 						<!-- single banner start -->
 {#                        <div id="map" class="single-banner single-big-btm"></div>#}
-                        <div id="map" class="single-banner single-big-btm" style="width:1246px;height:530px;"></div>
+                        <div id="map" class="single-banner single-big-btm" style="width:930px;height:530px;padding-right:5px;"></div>
                         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d09b8d66ce7e1980c5da475e82170c0"></script>
                         <script>
                             var container = document.getElementById('map');
