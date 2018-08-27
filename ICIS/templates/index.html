@@ -1,5 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
+    <p id="demo"></p>
+    <div id="mapholdder"></div>
+    <script>
+        var x = document.getElementById("demo");
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        function showPosition(position) {
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+            $.ajax({
+                type: "POST",
+                url: "/regVisitor",
+                data: {lat: position.coords.latitude, lng: position.coords.longitude},
+                beforeSend: function (xhr) {
+                    //console.log("ok it was " + data);
+                    console.log(this.data);
+                }
+            });
+        }
+    </script>
         <!-- product section start -->
 		<div class="our-product-area new-product">
 			<div class="container">
@@ -340,7 +363,7 @@
 					<div class="col-md-8 col-sm-8 col-xs-12 nopadding">
 						<!-- single banner start -->
 						<div class="single-banner single-big">
-                            <a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/banner/home8-banner-1.jpg') }}" alt="" /></a>
+							<a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/banner/home8-banner-1.jpg') }}" alt="" /></a>
 						</div>
 						<!-- single banner end -->
 					</div>
@@ -359,14 +382,45 @@
 						</div>
 						<!-- single banner end -->
 					</div>
-					<div class="col-md-8 col-sm-8 col-xs-12 mrg-tm nopadding">
+                    <div class="col-md-8 col-sm-8 col-xs-12 mrg-tm">
 						<!-- single banner start -->
-						<div class="single-banner single-big-btm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-4.jpg') }}" alt="" /></a>
-						</div>
-						<!-- single banner end -->
+{#                        <div id="map" class="single-banner single-big-btm"></div>#}
+                        <div id="map" class="single-banner single-big-btm" style="width:1246px;height:530px;"></div>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6e3ed1a3efd36128d7a4cb2a0841c9b4"></script>
+                        <script>
+                            var container = document.getElementById('map');
+                            var options = {
+                                center: new daum.maps.LatLng(33.450701, 126.570667),
+                                level: 3
+                            };
+
+                            var map = new daum.maps.Map(container, options);
+
+                            var marker = new daum.maps.Marker({
+                                position: new daum.maps.LatLng(33.450701, 126.570667),
+                                clickable: true
+                            });
+
+                            marker.setMap(map);
+
+                            var iwContent = '<div style="padding:5px;">꿈의직장!!!</div>';
+                            var iwRemoveable = true;
+
+                            var infowindow = new daum.maps.InfoWindow({
+                                content : iwContent,
+                                removable : iwRemoveable
+                            });
+
+                            daum.maps.event.addListener(marker, 'click', function() {
+                                infowindow.open(map, marker);
+                            });
+                        </script>
 					</div>
 				</div>
 			</div>
 		</div>
 {% endblock content %}
+
+
+
+

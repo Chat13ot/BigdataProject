@@ -1,6 +1,6 @@
 import elasticsearch
 import json
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, session
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
@@ -12,6 +12,8 @@ import datetime
 
 app = Flask(__name__)
 es_client = elasticsearch.Elasticsearch('localhost:9200')
+
+
 
 app.secret_key = 'icis secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
@@ -96,17 +98,18 @@ def productSearch(search_term=None):
 
 @app.route('/')
 def index():
-    doc_diaper = productView('diaper')
-    totalnums.append(doc_diaper['hits']['total'])
 
-    doc_milkpowder = productView('milkpowder')
-    totalnums.append(doc_milkpowder['hits']['total'])
-
-    doc_snack = productView('snack')
-    totalnums.append(doc_snack['hits']['total'])
-
-    doc_toy = productView('toy')
-    totalnums.append(doc_toy['hits']['total'])
+    # doc_diaper = productView('diaper')
+    # totalnums.append(doc_diaper['hits']['total'])
+    #
+    # doc_milkpowder = productView('milkpowder')
+    # totalnums.append(doc_milkpowder['hits']['total'])
+    #
+    # doc_snack = productView('snack')
+    # totalnums.append(doc_snack['hits']['total'])
+    #
+    # doc_toy = productView('toy')
+    # totalnums.append(doc_toy['hits']['total'])
 
     return render_template('index.html')
 
@@ -183,7 +186,7 @@ def register():
         birthDate = userform.birthDate._value().split('/')
 
         user.birthDate = datetime.date(int(birthDate[2]), int(birthDate[0]), int(birthDate[1]))
-
+        print(user.id + user.password + user.babyName)
         db.session.add(user)
         db.session.commit()
         return render_template('preference.html', user = user.id)
@@ -371,6 +374,30 @@ def prefer():
         return redirect('/')
 
     return render_template('preference.html')
+
+
+@app.route("/regVisitor", methods=["POST"])
+def regVisitor():
+    lat = request.form.get("lat")
+    lng = request.form.get("lng")
+    print('lat: {0}, lng: {1}'.format(lat,lng))
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    # if request.method == 'POST':
+    #     userId = request.form['id']
+    #     wp = request.form['wp']
+    #     if len(userId) == 0 or len(wp) == 0:
+    #         return userId+', '+wp+' 로그인 정보를 제대로 입력하지 않았습니다.'
+    #         session['logFlag'] = True
+    #         session['userId'] = userId
+    #         return session['userId'] + ' 님 환영합니다.'
+    #     else:
+    #         return '잘못된 접근입니다.'
+    # app.secret_key = 'sample_secreat_key'
+
+    return render_template('register.html')
 
 
 if __name__ == '__main__':
