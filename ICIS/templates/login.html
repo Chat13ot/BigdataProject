@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_search.html" %}
 {% block content %}
         <div class="customer-login-area">
 			<div class="container">
@@ -6,7 +6,7 @@
 					<div class="col-md-8 col-xs-12">
 						<div class="customer-register my-account">
 							<form method="post" class="login" action="{{ url_for('login') }}">
-								<div class="form-fields">
+								<div class="form-fields" style = "border-top:solid; color:#b3b1b1; border-left: solid; border-right: solid;>
 									<h2>Login</h2>
 								    <p class="form-row form-row-wide" >
 										<label for="reg_email"> 아이디 <span class="required">*</span></label>
@@ -20,7 +20,7 @@
 
 									</p>
 								</div>
-								<div class="form-action">
+								<div class="form-action" style="border-bottom:solid; border-left:solid; border-right:solid;color:#b3b1b1;">
 									<div class="actions-log">
 										<input type="submit" class="button" name="login" value="Login">
 									</div>

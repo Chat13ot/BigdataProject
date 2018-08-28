@@ -1,5 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
+    <p id="demo"></p>
+    <div id="mapholdder"></div>
+    <script>
+        var x = document.getElementById("demo");
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        function showPosition(position) {
+            {#x.innerHTML = "Latitude: " + position.coords.latitude +#}
+            {#    "<br>Longitude: " + position.coords.longitude;#}
+            $.ajax({
+                type: "POST",
+                url: "/regVisitor",
+                data: {lat: position.coords.latitude, lng: position.coords.longitude},
+                beforeSend: function (xhr) {
+                    //console.log("ok it was " + data);
+                    console.log(this.data);
+                }
+            });
+        }
+    </script>
         <!-- product section start -->
 		<div class="our-product-area new-product">
 			<div class="container">
@@ -7,6 +30,7 @@
 					<h2>New products</h2>
 				</div>
 				<!-- our-product area start -->
+                {% if id %}
 				<div class="row">
 					<div class="col-md-12">
 						<div class="row">
@@ -15,37 +39,14 @@
 								<div class="col-lg-12 col-md-12">
 									<div class="single-product first-sale">
 										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-1.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-2.jpg') }}" alt="" />
+											<a href="{{ milkpowderResult[3] }}">
+												<img class="primary-image" src="{{ milkpowderResult[1] }}" alt="" />
+												<img class="secondary-image" src="{{ milkpowderResult[1] }}" alt="" />
 											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$200.00</span>
-											</div>
 										</div>
 										<div class="product-content">
-											<h2 class="product-name"><a href="#">Donec ac tempus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
+											<h2 class="product-name"><a href="{{ milkpowderResult[3] }}">{{ milkpowderResult[0] }}</a></h2>
+											<p>{{ milkpowderResult[2] }}</p>
 										</div>
 									</div>
 								</div>
@@ -54,37 +55,14 @@
 								<div class="col-lg-12 col-md-12">
 									<div class="single-product first-sale">
 										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-5.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-6.jpg') }}" alt="" />
+											<a href="{{ diaperResult[3] }}">
+												<img class="primary-image" src="{{ diaperResult[1] }}" alt="" />
+												<img class="secondary-image" src="{{ diaperResult[1] }}" alt="" />
 											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$300.00</span>
-											</div>
 										</div>
 										<div class="product-content">
-											<h2 class="product-name"><a href="#">Primis in faucibus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
+											<h2 class="product-name"><a href="{{ diaperResult[3] }}">{{ diaperResult[0] }}</a></h2>
+											<p>{{ diaperResult[2] }}</p>
 										</div>
 									</div>
 								</div>
@@ -93,37 +71,14 @@
 								<div class="col-lg-12 col-md-12">
 									<div class="single-product first-sale">
 										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-9.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-10.jpg') }}" alt="" />
+											<a href="{{ snackResult[3] }}">
+												<img class="primary-image" src="{{ snackResult[1] }}" alt="" />
+												<img class="secondary-image" src="{{ snackResult[1] }}" alt="" />
 											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$270.00</span>
-											</div>
 										</div>
 										<div class="product-content">
-											<h2 class="product-name"><a href="#">Voluptas nulla</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
+											<h2 class="product-name"><a href="{{ snackResult[3] }}">{{ snackResult[0] }}</a></h2>
+											<p>{{ snackResult[2] }}</p>
 										</div>
 									</div>
 
@@ -133,194 +88,14 @@
 								<div class="col-lg-12 col-md-12">
 									<div class="single-product first-sale">
 										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-13.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-1.jpg') }}" alt="" />
+											<a href="{{ toyResult[3] }}">
+												<img class="primary-image" src="{{ toyResult[1] }}" alt="" />
+												<img class="secondary-image" src="{{ toyResult[1] }}" alt="" />
 											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$340.00</span>
-											</div>
 										</div>
 										<div class="product-content">
-											<h2 class="product-name"><a href="#">Cras neque metus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<span class="sale-text">Sale</span>
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-4.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-5.jpg') }}" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$360.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Occaecati cupiditate</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-8.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-9.jpg') }}" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$400.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Accumsan elit</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-11.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-12.jpg') }}" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$280.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Pellentesque habitant</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
-										</div>
-									</div>
-								</div>
-								<!-- single-product end -->
-								<!-- single-product start -->
-								<div class="col-lg-12 col-md-12">
-									<div class="single-product first-sale">
-										<div class="product-img">
-											<a href="#">
-												<img class="primary-image" src="{{ url_for('static', filename='img/products/product-11.jpg') }}" alt="" />
-												<img class="secondary-image" src="{{ url_for('static', filename='img/products/product-2.jpg') }}" alt="" />
-											</a>
-											<div class="action-zoom">
-												<div class="add-to-cart">
-													<a href="#" title="Quick View"><i class="fa fa-search-plus"></i></a>
-												</div>
-											</div>
-											<div class="actions">
-												<div class="action-buttons">
-													<div class="add-to-links">
-														<div class="add-to-wishlist">
-															<a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-														</div>
-														<div class="compare-button">
-															<a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
-														</div>
-													</div>
-													<div class="quickviewbtn">
-														<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
-													</div>
-												</div>
-											</div>
-											<div class="price-box">
-												<span class="new-price">$222.00</span>
-											</div>
-										</div>
-										<div class="product-content">
-											<h2 class="product-name"><a href="#">Donec ac tempus</a></h2>
-											<p>Nunc facilisis sagittis ullamcorper...</p>
+											<h2 class="product-name"><a href="{{ toyResult[3] }}">{{ toyResult[0] }}</a></h2>
+											<p>{{ toyResult[2] }}</p>
 										</div>
 									</div>
 								</div>
@@ -329,6 +104,7 @@
 						</div>
 					</div>
 				</div>
+                {% endif %}
 				<!-- our-product area end -->
 			</div>
 		</div>
@@ -340,31 +116,358 @@
 					<div class="col-md-8 col-sm-8 col-xs-12 nopadding">
 						<!-- single banner start -->
 						<div class="single-banner single-big">
-							<a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/banner/home8-banner-1.jpg') }}" alt="" /></a>
+							<a href="{{ url_for('productList_diaper', page=1) }}"><img src="{{ url_for('static', filename='img/product_banner.jpg') }}" alt="" /></a>
 						</div>
 						<!-- single banner end -->
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-12 mrg-tm nopadding">
 						<!-- single banner start -->
 						<div class="single-banner sn-sm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-2.jpg') }}" alt="" /></a>
+							<a href="{{ url_for('activityList', page=1) }}"><img src="{{ url_for('static', filename='img/activity_banner.jpg') }}" alt="" /></a>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-xs-12 nopadding">
 						<!-- single banner start -->
-						<div class="single-banner sn-sm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-3.jpg') }}" alt="" /></a>
+						<div class="single-banner sn-sm" style="text-align: center">
+                            {% if diseaseCount %}
+                                <label><h2>질병별 분류</h2></label>
+                                <br>
+                                <br>
+                                <ul>
+                                    {% for i in range(diseaseCount) %}
+                                        <li><h3 class="product-name"><button type="submit" name="term" href="{{ url_for('advancedIndex') }}">{{ diseaseList[i] }}</button></h3></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <label><h2>로그인 후 사용가능합니다!!</h2></label>
+                            {% endif %}
 						</div>
 						<!-- single banner end -->
 					</div>
-					<div class="col-md-8 col-sm-8 col-xs-12 mrg-tm nopadding">
-						<!-- single banner start -->
-						<div class="single-banner single-big-btm">
-							<a href="#"><img src="{{ url_for('static', filename='img/banner/home8-banner-4.jpg') }}" alt="" /></a>
-						</div>
-						<!-- single banner end -->
+                    <div class="col-md-8 col-sm-8 col-xs-12 mrg-tm">
+                        <div id="map" class="single-banner single-big-btm" style="width:930px;height:530px;padding-right:5px;"></div>
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8d09b8d66ce7e1980c5da475e82170c0"></script>
+                        {% if do %}
+                            <script>
+                                var container = document.getElementById('map');
+                                var options = {
+                                    center: new daum.maps.LatLng(37.5769111, 127.0605491),
+                                    level: 3
+                                };
+                                var map = new daum.maps.Map(container, options);
+
+
+                                var marker1 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[0] }}, {{ lngs[0] }}),
+                                    clickable: true
+                                });
+                                marker1.setMap(map);
+                                var iwContent1 = '<div style="padding:5px;"><li>{{ names[0] }}</li><li>{{ numbers[0] }}</li></div>';
+                                var iwRemoveable = true;
+                                var infowindow1 = new daum.maps.InfoWindow({
+                                    content : iwContent1,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker1, 'click', function() {
+                                    infowindow1.open(map, marker1);
+                                });
+
+
+                                var marker2 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[1] }}, {{ lngs[1] }}),
+                                    clickable: true
+                                });
+                                marker2.setMap(map);
+                                var iwContent2 = '<div style="padding:5px;"><li>{{ names[1] }}</li><li>{{ numbers[1] }}</li></div>';
+                                var infowindow2 = new daum.maps.InfoWindow({
+                                    content : iwContent2,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker2, 'click', function() {
+                                    infowindow2.open(map, marker2);
+                                });
+
+
+                                var marker3 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[2] }}, {{ lngs[2] }}),
+                                    clickable: true
+                                });
+                                marker3.setMap(map);
+                                var iwContent3 = '<div style="padding:5px;"><li>{{ names[2] }}</li><li>{{ numbers[2] }}</li></div>';
+                                var infowindow3 = new daum.maps.InfoWindow({
+                                    content : iwContent3,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker3, 'click', function() {
+                                    infowindow3.open(map, marker3);
+                                });
+
+
+                                var marker4 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[3] }}, {{ lngs[3] }}),
+                                    clickable: true
+                                });
+                                marker4.setMap(map);
+                                var iwContent4 = '<div style="padding:5px;"><li>{{ names[3] }}</li><li>{{ numbers[3] }}</li></div>';
+                                var infowindow4 = new daum.maps.InfoWindow({
+                                    content : iwContent4,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker4, 'click', function() {
+                                    infowindow4.open(map, marker4);
+                                });
+
+
+                                var marker5 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[4] }}, {{ lngs[4] }}),
+                                    clickable: true
+                                });
+                                marker5.setMap(map);
+                                var iwContent5 = '<div style="padding:5px;"><li>{{ names[4] }}</li><li>{{ numbers[4] }}</li></div>';
+                                var infowindow5 = new daum.maps.InfoWindow({
+                                    content : iwContent5,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker5, 'click', function() {
+                                    infowindow5.open(map, marker5);
+                                });
+
+
+                                var marker6 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[5] }}, {{ lngs[5] }}),
+                                    clickable: true
+                                });
+                                marker6.setMap(map);
+                                var iwContent6 = '<div style="padding:5px;"><li>{{ names[5] }}</li><li>{{ numbers[5] }}</li></div>';
+                                var infowindow6 = new daum.maps.InfoWindow({
+                                    content : iwContent6,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker6, 'click', function() {
+                                    infowindow6.open(map, marker6);
+                                });
+
+
+                                var marker7 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[6] }}, {{ lngs[6] }}),
+                                    clickable: true
+                                });
+                                marker7.setMap(map);
+                                var iwContent7 = '<div style="padding:5px;"><li>{{ names[6] }}</li><li>{{ numbers[6] }}</li></div>';
+                                var infowindow7 = new daum.maps.InfoWindow({
+                                    content : iwContent7,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker7, 'click', function() {
+                                    infowindow7.open(map, marker7);
+                                });
+
+
+                                var marker8 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[7] }}, {{ lngs[7] }}),
+                                    clickable: true
+                                });
+                                marker8.setMap(map);
+                                var iwContent8 = '<div style="padding:5px;"><li>{{ names[7] }}</li><li>{{ numbers[7] }}</li></div>';
+                                var infowindow8 = new daum.maps.InfoWindow({
+                                    content : iwContent8,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker8, 'click', function() {
+                                    infowindow8.open(map, marker8);
+                                });
+
+
+                                var marker9 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[8] }}, {{ lngs[8] }}),
+                                    clickable: true
+                                });
+                                marker9.setMap(map);
+                                var iwContent9 = '<div style="padding:5px;"><li>{{ names[8] }}</li><li>{{ numbers[8] }}</li></div>';
+                                var infowindow9 = new daum.maps.InfoWindow({
+                                    content : iwContent9,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker9, 'click', function() {
+                                    infowindow9.open(map, marker9);
+                                });
+
+
+                                var marker10 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[9] }}, {{ lngs[9] }}),
+                                    clickable: true
+                                });
+                                marker10.setMap(map);
+                                var iwContent10 = '<div style="padding:5px;"><li>{{ names[9] }}</li><li>{{ numbers[9] }}</li></div>';
+                                var infowindow10 = new daum.maps.InfoWindow({
+                                    content : iwContent10,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker10, 'click', function() {
+                                    infowindow10.open(map, marker10);
+                                });
+
+
+                                var marker11 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[10] }}, {{ lngs[10] }}),
+                                    clickable: true
+                                });
+                                marker11.setMap(map);
+                                var iwContent11 = '<div style="padding:5px;"><li>{{ names[10] }}</li><li>{{ numbers[10] }}</li></div>';
+                                var infowindow11 = new daum.maps.InfoWindow({
+                                    content : iwContent11,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker11, 'click', function() {
+                                    infowindow11.open(map, marker11);
+                                });
+
+
+                                var marker12 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[11] }}, {{ lngs[11] }}),
+                                    clickable: true
+                                });
+                                marker12.setMap(map);
+                                var iwContent12 = '<div style="padding:5px;"><li>{{ names[11] }}</li><li>{{ numbers[11] }}</li></div>';
+                                var infowindow12 = new daum.maps.InfoWindow({
+                                    content : iwContent12,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker12, 'click', function() {
+                                    infowindow12.open(map, marker12);
+                                });
+
+
+                                var marker13 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[12] }}, {{ lngs[12] }}),
+                                    clickable: true
+                                });
+                                marker13.setMap(map);
+                                var iwContent13 = '<div style="padding:5px;"><li>{{ names[12] }}</li><li>{{ numbers[12] }}</li></div>';
+                                var infowindow13 = new daum.maps.InfoWindow({
+                                    content : iwContent13,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker13, 'click', function() {
+                                    infowindow13.open(map, marker13);
+                                });
+
+
+                                var marker14 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[13] }}, {{ lngs[13] }}),
+                                    clickable: true
+                                });
+                                marker14.setMap(map);
+                                var iwContent14 = '<div style="padding:5px;"><li>{{ names[13] }}</li><li>{{ numbers[13] }}</li></div>';
+                                var infowindow14 = new daum.maps.InfoWindow({
+                                    content : iwContent14,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker14, 'click', function() {
+                                    infowindow14.open(map, marker14);
+                                });
+
+
+                                var marker15 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[14] }}, {{ lngs[14] }}),
+                                    clickable: true
+                                });
+                                marker15.setMap(map);
+                                var iwContent15 = '<div style="padding:5px;"><li>{{ names[14] }}</li><li>{{ numbers[14] }}</li></div>';
+                                var infowindow15 = new daum.maps.InfoWindow({
+                                    content : iwContent15,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker15, 'click', function() {
+                                    infowindow15.open(map, marker15);
+                                });
+
+                                var marker16 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[15] }}, {{ lngs[15] }}),
+                                    clickable: true
+                                });
+                                marker16.setMap(map);
+                                var iwContent16 = '<div style="padding:5px;"><li>{{ names[15] }}</li><li>{{ numbers[15] }}</li></div>';
+                                var infowindow16 = new daum.maps.InfoWindow({
+                                    content : iwContent16,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker16, 'click', function() {
+                                    infowindow16.open(map, marker16);
+                                });
+
+
+                                var marker17 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[16] }}, {{ lngs[16] }}),
+                                    clickable: true
+                                });
+                                marker17.setMap(map);
+                                var iwContent17 = '<div style="padding:5px;"><li>{{ names[16] }}</li><li>{{ numbers[16] }}</li></div>';
+                                var infowindow17 = new daum.maps.InfoWindow({
+                                    content : iwContent17,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker17, 'click', function() {
+                                    infowindow17.open(map, marker17);
+                                });
+
+
+                                var marker18 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[17] }}, {{ lngs[17] }}),
+                                    clickable: true
+                                });
+                                marker18.setMap(map);
+                                var iwContent18 = '<div style="padding:5px;"><li>{{ names[17] }}</li><li>{{ numbers[17] }}</li></div>';
+                                var infowindow18 = new daum.maps.InfoWindow({
+                                    content : iwContent18,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker18, 'click', function() {
+                                    infowindow18.open(map, marker18);
+                                });
+
+
+                                var marker19 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[18] }}, {{ lngs[18] }}),
+                                    clickable: true
+                                });
+                                marker19.setMap(map);
+                                var iwContent19 = '<div style="padding:5px;"><li>{{ names[18] }}</li><li>{{ numbers[18] }}</li></div>';
+                                var infowindow19 = new daum.maps.InfoWindow({
+                                    content : iwContent19,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker19, 'click', function() {
+                                    infowindow19.open(map, marker19);
+                                });
+
+
+                                var marker20 = new daum.maps.Marker({
+                                    position: new daum.maps.LatLng({{ lats[19] }}, {{ lngs[19] }}),
+                                    clickable: true
+                                });
+                                marker20.setMap(map);
+                                var iwContent20 = '<div style="padding:5px;"><li>{{ names[19] }}</li><li>{{ numbers[19] }}</li></div>';
+                                var infowindow20 = new daum.maps.InfoWindow({
+                                    content : iwContent20,
+                                    removable : iwRemoveable
+                                });
+                                daum.maps.event.addListener(marker20, 'click', function() {
+                                    infowindow20.open(map, marker20);
+                                });
+                            </script>
+                        {% else %}
+                            <script>
+                                var container = document.getElementById('map');
+                                var options = {
+                                    center: new daum.maps.LatLng(37.5835642, 127.02895470000001),
+                                    level: 3
+                                };
+                                var map = new daum.maps.Map(container, options);
+                            </script>
+                        {% endif %}
 					</div>
 				</div>
 			</div>

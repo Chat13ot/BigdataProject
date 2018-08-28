@@ -10,7 +10,7 @@
 					<!-- logo start -->
 					<div class="col-md-6 text-left">
 						<div class="top-logo" style="width:120px; line-height: 60px;">
-							<a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/icis_logo.png') }}" alt="" /></a>
+							<a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/new_icis.png') }}" alt="" /></a>
 
 						</div>
 					</div>
@@ -112,7 +112,7 @@
 {#									<div class="search-icon fa fa-search"></div>#}
 {#									<div class="product-search restrain">#}
 										<div class="container nopadding-right">
-											<form action="{{ url_for('search') }}" id="search" method="post">
+											<form action="{{ url_for('search', page=1) }}" id="search" method="post">
 											</form>
 										</div>
 									</div>

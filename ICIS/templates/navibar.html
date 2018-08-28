@@ -5,12 +5,21 @@
         <!-- Add your site or application content here -->
 		<!-- header area start -->
 		<header>
+            <!--register.html 에서 datepicker 부분-->
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+            <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+            <script>
+            $(function() {
+                $( ".dtpick" ).datepicker();
+            });
+            </script>
 			<div class="container-fluid">
 				<div class="row">
 					<!-- logo start -->
 					<div class="col-md-6 text-left">
 						<div class="top-logo" style="width:120px; line-height: 60px;">
-							<a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/icis_logo.png') }}" alt="" /></a>
+							<a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='img/new_icis.png') }}" alt="" /></a>
 
 						</div>
 					</div>
@@ -20,23 +29,32 @@
 						<div class="top-detail">
 							<!-- language division start -->
 							<div class="disflow">
-								<div class="expand lang-all disflow">
-									<a href="#">Log in</a>
-{#									<ul class="restrain language">#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/it.gif') }}" alt="">italiano</a></li>#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/nl_nl.gif') }}" alt="">Nederlands</a></li>#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/de_de.gif') }}" alt="">Deutsch</a></li>#}
-{#										<li><a href="#"><img src="{{ url_for('static', filename='img/country/en.gif') }}" alt="">English</a></li>#}
-{#									</ul>#}
-								</div>
-								<div class="expand lang-all disflow">
-									<a href="{{ url_for('register') }}">Join</a>
-{#									<ul class="restrain language">#}
-{#										<li><a href="#">€ Eur</a></li>#}
-{#										<li><a href="#">$ USD</a></li>#}
-{#										<li><a href="#">£ GBP</a></li>#}
-{#									</ul>#}
-								</div>
+                                 {% if id  %}
+                                         <div class="expand lang-all disflow">
+                                             <a >{{ id }} 님 안녕하세요!</a>
+                                         </div>
+                                         <div class="expand lang-all disflow">
+                                             <a href="{{ url_for('logout') }}">Logout</a>
+                                         </div>
+
+                                         {% else %}
+
+                                         <div class="expand lang-all disflow">
+                                             <a href="{{ url_for('login') }}">Log in</a>
+                                         </div>
+                                         <div class="expand lang-all disflow">
+                                             <a href="{{ url_for('register') }}">Join</a>
+                                         </div>
+
+                                 {% endif %}
+
+
+{#								<div class="expand lang-all disflow">#}
+{#                                    <a href="{{ url_for('login') }}">Log in</a>#}
+{#								</div>#}
+{#								<div class="expand lang-all disflow">#}
+{#									<a href="{{ url_for('register') }}">Join</a>#}
+{#								</div>#}
 							</div>
 							<!-- language division end -->
 							<!-- addcart top start -->
@@ -85,12 +103,12 @@
 {#								<div class="expand dropps-menu">#}
 {#									<a href="#"><i class="fa fa-align-right"></i></a>#}
 {#									<ul class="restrain language">#}
-{#										<li><a href="login.html">My Account</a></li>#}
+{#										<li><a href="tmp_login.html">My Account</a></li>#}
 {#										<li><a href="wishlist.html">My Wishlist</a></li>#}
 {#										<li><a href="cart.html">My Cart</a></li>#}
 {#										<li><a href="checkout.html">Checkout</a></li>#}
 {#										<li><a href="#">Testimonial</a></li>#}
-{#										<li><a href="login.html">Log In</a></li>#}
+{#										<li><a href="tmp_login.html">Log In</a></li>#}
 {#									</ul>#}
 {#								</div>#}
 {#							</div>#}

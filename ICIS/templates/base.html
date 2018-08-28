@@ -74,7 +74,13 @@
 
         <script src="{{ url_for('static', filename='js/vendor/modernizr-2.8.3.min.js') }}"></script>
     </head>
-
+    <style>
+        body{
+            background-color: #ffffff;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='0' x2='0' y1='0' y2='100%25' gradientTransform='rotate(240)'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23ffffe0'/%3E%3C/linearGradient%3E%3Cpattern patternUnits='userSpaceOnUse' id='b' width='540' height='450' x='0' y='0' viewBox='0 0 1080 900'%3E%3Cg fill-opacity='0.1'%3E%3Cpolygon fill='%23444' points='90 150 0 300 180 300'/%3E%3Cpolygon points='90 150 180 0 0 0'/%3E%3Cpolygon fill='%23AAA' points='270 150 360 0 180 0'/%3E%3Cpolygon fill='%23DDD' points='450 150 360 300 540 300'/%3E%3Cpolygon fill='%23999' points='450 150 540 0 360 0'/%3E%3Cpolygon points='630 150 540 300 720 300'/%3E%3Cpolygon fill='%23DDD' points='630 150 720 0 540 0'/%3E%3Cpolygon fill='%23444' points='810 150 720 300 900 300'/%3E%3Cpolygon fill='%23FFF' points='810 150 900 0 720 0'/%3E%3Cpolygon fill='%23DDD' points='990 150 900 300 1080 300'/%3E%3Cpolygon fill='%23444' points='990 150 1080 0 900 0'/%3E%3Cpolygon fill='%23DDD' points='90 450 0 600 180 600'/%3E%3Cpolygon points='90 450 180 300 0 300'/%3E%3Cpolygon fill='%23666' points='270 450 180 600 360 600'/%3E%3Cpolygon fill='%23AAA' points='270 450 360 300 180 300'/%3E%3Cpolygon fill='%23DDD' points='450 450 360 600 540 600'/%3E%3Cpolygon fill='%23999' points='450 450 540 300 360 300'/%3E%3Cpolygon fill='%23999' points='630 450 540 600 720 600'/%3E%3Cpolygon fill='%23FFF' points='630 450 720 300 540 300'/%3E%3Cpolygon points='810 450 720 600 900 600'/%3E%3Cpolygon fill='%23DDD' points='810 450 900 300 720 300'/%3E%3Cpolygon fill='%23AAA' points='990 450 900 600 1080 600'/%3E%3Cpolygon fill='%23444' points='990 450 1080 300 900 300'/%3E%3Cpolygon fill='%23222' points='90 750 0 900 180 900'/%3E%3Cpolygon points='270 750 180 900 360 900'/%3E%3Cpolygon fill='%23DDD' points='270 750 360 600 180 600'/%3E%3Cpolygon points='450 750 540 600 360 600'/%3E%3Cpolygon points='630 750 540 900 720 900'/%3E%3Cpolygon fill='%23444' points='630 750 720 600 540 600'/%3E%3Cpolygon fill='%23AAA' points='810 750 720 900 900 900'/%3E%3Cpolygon fill='%23666' points='810 750 900 600 720 600'/%3E%3Cpolygon fill='%23999' points='990 750 900 900 1080 900'/%3E%3Cpolygon fill='%23999' points='180 0 90 150 270 150'/%3E%3Cpolygon fill='%23444' points='360 0 270 150 450 150'/%3E%3Cpolygon fill='%23FFF' points='540 0 450 150 630 150'/%3E%3Cpolygon points='900 0 810 150 990 150'/%3E%3Cpolygon fill='%23222' points='0 300 -90 450 90 450'/%3E%3Cpolygon fill='%23FFF' points='0 300 90 150 -90 150'/%3E%3Cpolygon fill='%23FFF' points='180 300 90 450 270 450'/%3E%3Cpolygon fill='%23666' points='180 300 270 150 90 150'/%3E%3Cpolygon fill='%23222' points='360 300 270 450 450 450'/%3E%3Cpolygon fill='%23FFF' points='360 300 450 150 270 150'/%3E%3Cpolygon fill='%23444' points='540 300 450 450 630 450'/%3E%3Cpolygon fill='%23222' points='540 300 630 150 450 150'/%3E%3Cpolygon fill='%23AAA' points='720 300 630 450 810 450'/%3E%3Cpolygon fill='%23666' points='720 300 810 150 630 150'/%3E%3Cpolygon fill='%23FFF' points='900 300 810 450 990 450'/%3E%3Cpolygon fill='%23999' points='900 300 990 150 810 150'/%3E%3Cpolygon points='0 600 -90 750 90 750'/%3E%3Cpolygon fill='%23666' points='0 600 90 450 -90 450'/%3E%3Cpolygon fill='%23AAA' points='180 600 90 750 270 750'/%3E%3Cpolygon fill='%23444' points='180 600 270 450 90 450'/%3E%3Cpolygon fill='%23444' points='360 600 270 750 450 750'/%3E%3Cpolygon fill='%23999' points='360 600 450 450 270 450'/%3E%3Cpolygon fill='%23666' points='540 600 630 450 450 450'/%3E%3Cpolygon fill='%23222' points='720 600 630 750 810 750'/%3E%3Cpolygon fill='%23FFF' points='900 600 810 750 990 750'/%3E%3Cpolygon fill='%23222' points='900 600 990 450 810 450'/%3E%3Cpolygon fill='%23DDD' points='0 900 90 750 -90 750'/%3E%3Cpolygon fill='%23444' points='180 900 270 750 90 750'/%3E%3Cpolygon fill='%23FFF' points='360 900 450 750 270 750'/%3E%3Cpolygon fill='%23AAA' points='540 900 630 750 450 750'/%3E%3Cpolygon fill='%23FFF' points='720 900 810 750 630 750'/%3E%3Cpolygon fill='%23222' points='900 900 990 750 810 750'/%3E%3Cpolygon fill='%23222' points='1080 300 990 450 1170 450'/%3E%3Cpolygon fill='%23FFF' points='1080 300 1170 150 990 150'/%3E%3Cpolygon points='1080 600 990 750 1170 750'/%3E%3Cpolygon fill='%23666' points='1080 600 1170 450 990 450'/%3E%3Cpolygon fill='%23DDD' points='1080 900 1170 750 990 750'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect x='0' y='0' fill='url(%23a)' width='100%25' height='100%25'/%3E%3Crect x='0' y='0' fill='url(%23b)' width='100%25' height='100%25'/%3E%3C/svg%3E");
+background-attachment: fixed;
+background-size: cover;}
+    </style>
     <body{% block body_attribs %}{% endblock body_attribs %}>
         {% block header %}
             {% include 'navibar.html' %}
@@ -93,73 +99,75 @@
 						<div class="col-md-3 col-sm-4">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
-									<h4>Company info</h4>
+									<h4>ICIS</h4>
 								</div>
 								<div class="cakewalk-footer-content">
-									<p class="footer-des">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim adm.</p>
-									<a href="#" class="read-more">Read more</a>
+									<p class="footer-des">맞벌이 부부를 위한 유아 맞춤형 정보 시스템</p>
+									<a href="#" class="read-more"></a>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3 col-sm-4">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
-									<h4>Information</h4>
+									<h4>개발</h4>
 								</div>
 								<div class="cakewalk-footer-content">
 									<ul>
-										<li><a href="#">About Us</a></li>
-										<li><a href="#">Careers</a></li>
-										<li><a href="#">Delivery Information</a></li>
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Terms & Condition</a></li>
+										<li>김수정</a></li>
+										<li>이재현</a></li>
+										<li>이승재</a></li>
+										<li></a></li>
+										<li></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-2 col-sm-4">
+						<div class="col-md-3 col-sm-5">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
-									<h4>Fashion Tags</h4>
+									<h4>적용한 기술</h4>
 								</div>
 								<div class="cakewalk-footer-content">
 									<ul>
-										<li><a href="#">My Account</a></li>
-										<li><a href="#">Login</a></li>
-										<li><a href="#">My Cart</a></li>
-										<li><a href="#">Wishlist</a></li>
-										<li><a href="#">Checkout</a></li>
+										<li>검색 엔진 : Elastic Search</a></li>
+										<li>추천 시스템 : Surprise, Sklearn library</a></li>
+										<li>데이터 크롤링 : Bs4, Selenium library</a></li>
+										<li>데이터 전처리 : Pandas library</a></li>
+										<li>데이터베이스 : MongoDB, SQLite</a></li>
+                                        <li>위치 데이터 : Geolocation api</li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-2 hidden-sm">
+						<div class="col-md-3 hidden-sm">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
-									<h4>Fashion Tags</h4>
+									<h4>데이터 출처</h4>
 								</div>
 								<div class="cakewalk-footer-content">
 									<ul>
-										<li><a href="#">Sitemap</a></li>
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Advanced Search</a></li>
-										<li><a href="#">Affiliates</a></li>
-										<li><a href="#">Contact Us</a></li>
+										<li>상품 정보 : 티몬, 옥션, 11번가, 쿠팡</a></li>
+										<li>보건소, 병원 위치 정보 : 질병관리본부</a></li>
+										<li></a></li>
+										<li></a></li>
+										<li></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-2 hidden-sm">
+						<div class="col-md-3 hidden-sm">
 							<div class="single-snap-footer">
 								<div class="snap-footer-title">
-									<h4>Follow Us</h4>
+                                    <br>
+									<h4>데이터진흥원 & 고려대학교</h4>
 								</div>
-								<div class="cakewalk-footer-content social-footer">
+								<div class="cakewalk-footer-content">
 									<ul>
-										<li><a href="https://www.facebook.com" target="_blank"><i class="fa fa-facebook"></i></a><span> Facebook</span></li>
-										<li><a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus"></i></a><span> Google Plus</span></li>
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a><span> Twitter</span></li>
-										<li><a href="https://youtube.com/" target="_blank"><i class="fa fa-youtube-play"></i></a><span> Youtube</span></li>
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
 									</ul>
 								</div>
 							</div>
@@ -173,7 +181,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-6 col-xs-12">
-							<address>Copyright © <a href="http://bootexperts.com/">BootExperts.</a> All Rights Reserved</address>
+							<address>Copyright © ICIS. </> All Rights Reserved</address>
 						</div>
 					</div>
 				</div>
