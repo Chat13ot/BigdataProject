@@ -247,7 +247,7 @@ def user_recommendation_toy(brand_term=None):
 
 
 @app.route('/')
-def index():
+def index(session=session):
     global lat
     global lng
 
@@ -268,112 +268,132 @@ def index():
     if len(session) == 0:
         return render_template('index.html')
     else:
-        if session['userId'] is not None:
-            conn = sqlite3.connect('user.db')
-            cur = conn.cursor()
+        print(session)
+        conn = sqlite3.connect('user.db')
+        cur = conn.cursor()
 
-            cur.execute("SELECT milkpowder from role where user_id=?", (session['userId'],))
-            milksession = cur.fetchone()[0]
-            milkpowder_terms = milkpowder(milksession)
+        cur.execute("SELECT milkpowder from role where user_id=?", (session['userId'],))
+        milksession = cur.fetchone()[0]
+        milkpowder_terms = milkpowder(milksession)
 
-            cur.execute("SELECT diaper from role where user_id=?", (session['userId'],))
-            diapersession = cur.fetchone()[0]
-            diaper_terms = diaper(diapersession)
+        cur.execute("SELECT diaper from role where user_id=?", (session['userId'],))
+        diapersession = cur.fetchone()[0]
+        diaper_terms = diaper(diapersession)
 
-            cur.execute("SELECT toy from role where user_id=?", (session['userId'],))
-            toysession = cur.fetchone()[0]
-            toy_term = toy(toysession)
+        cur.execute("SELECT toy from role where user_id=?", (session['userId'],))
+        toysession = cur.fetchone()[0]
+        toy_term = toy(toysession)
 
-            cur.execute("SELECT snack from role where user_id=?", (session['userId'],))
-            snacksession = cur.fetchone()[0]
-            snack_term = snack(snacksession)
+        cur.execute("SELECT snack from role where user_id=?", (session['userId'],))
+        snacksession = cur.fetchone()[0]
+        snack_term = snack(snacksession)
 
-            rec_milkpowder = user_recommendation_milkpowder(milkpowder_terms)['hits']['hits']
-            rec_diaper = user_recommendation_diaper(diaper_terms)['hits']['hits']
-            rec_toy = user_recommendation_toy(toy_term)['hits']['hits']
-            rec_snack = user_recommendation_snack(snack_term)['hits']['hits']
+        rec_milkpowder = user_recommendation_milkpowder(milkpowder_terms)['hits']['hits']
+        rec_diaper = user_recommendation_diaper(diaper_terms)['hits']['hits']
+        rec_toy = user_recommendation_toy(toy_term)['hits']['hits']
+        rec_snack = user_recommendation_snack(snack_term)['hits']['hits']
 
-            print(rec_milkpowder)
+        milkpowderResult = []
+        milkpowderResult.append(rec_milkpowder[0]['_source']['title'])
+        milkpowderResult.append(rec_milkpowder[0]['_source']['img'])
+        milkpowderResult.append(rec_milkpowder[0]['_source']['price'])
+        milkpowderResult.append(rec_milkpowder[0]['_source']['link'])
 
-            milkpowderResult = []
-            milkpowderResult.append(rec_milkpowder[0]['_source']['title'])
-            milkpowderResult.append(rec_milkpowder[0]['_source']['img'])
-            milkpowderResult.append(rec_milkpowder[0]['_source']['price'])
-            milkpowderResult.append(rec_milkpowder[0]['_source']['link'])
+        diaperResult = []
+        diaperResult.append(rec_diaper[0]['_source']['title'])
+        diaperResult.append(rec_diaper[0]['_source']['img'])
+        diaperResult.append(rec_diaper[0]['_source']['price'])
+        diaperResult.append(rec_diaper[0]['_source']['link'])
 
-            diaperResult = []
-            diaperResult.append(rec_diaper[0]['_source']['title'])
-            diaperResult.append(rec_diaper[0]['_source']['img'])
-            diaperResult.append(rec_diaper[0]['_source']['price'])
-            diaperResult.append(rec_diaper[0]['_source']['link'])
+        toyResult = []
+        toyResult.append(rec_toy[0]['_source']['title'])
+        toyResult.append(rec_toy[0]['_source']['img'])
+        toyResult.append(rec_toy[0]['_source']['price'])
+        toyResult.append(rec_toy[0]['_source']['link'])
 
-            toyResult = []
-            toyResult.append(rec_toy[0]['_source']['title'])
-            toyResult.append(rec_toy[0]['_source']['img'])
-            toyResult.append(rec_toy[0]['_source']['price'])
-            toyResult.append(rec_toy[0]['_source']['link'])
+        snackResult = []
+        snackResult.append(rec_snack[0]['_source']['title'])
+        snackResult.append(rec_snack[0]['_source']['img'])
+        snackResult.append(rec_snack[0]['_source']['price'])
+        snackResult.append(rec_snack[0]['_source']['link'])
 
-            snackResult = []
-            snackResult.append(rec_snack[0]['_source']['title'])
-            snackResult.append(rec_snack[0]['_source']['img'])
-            snackResult.append(rec_snack[0]['_source']['price'])
-            snackResult.append(rec_snack[0]['_source']['link'])
+        u_birthDate = User.query.filter_by(id=session['userId']).first().birthDate
+        y = u_birthDate.year
+        m = u_birthDate.month
+        d = u_birthDate.day
+        birth = datetime.datetime(y, m, d)
+        now = datetime.datetime.now()
+        u_age = int((now - birth).days / 30)
 
-            return render_template('index.html', id=session['userId'], milkpowderResult=milkpowderResult, diaperResult=diaperResult, toyResult=toyResult, snackResult=snackResult)
+        if 0 <= u_age <= 23:
+            diseaseList = diseases[u_age]
+            diseaseCount = len(diseaseList)
 
-    # else:
-    #     u_birthDate = User.query.filter_by(id=session['userId']).first().birthDate
-    #     y = u_birthDate.year
-    #     m = u_birthDate.month
-    #     d = u_birthDate.day
-    #     birth = datetime.datetime(y, m, d)
-    #     now = datetime.datetime.now()
-    #     u_age = int((now - birth).days / 30)
-    #
-    #     if 0 <= u_age <= 23:
-    #         diseaseList = diseases[u_age]
-    #         diseaseCount = len(diseaseList)
-    #
-    #     return render_template('index.html', id=session['userId'], diseaseList=diseaseList, diseaseCount=diseaseCount,
-    #                            lat=lat, lng=lng, do=False)
+        diseaseResult = []
+
+        for item in diseaseList:
+            diseaseResult.append(diseaseSearch(item, lat, lng))
+
+        lats = []
+        lngs = []
+        names = []
+        numbers = []
+
+        diseaseResult = diseaseResult[0]['hits']['hits'][:20]
+
+        print(len(diseaseResult))
+        print(diseaseResult[0])
+
+        for i in range(20):
+            lats.append(diseaseResult[i]['_source']['lat'])
+            lngs.append(diseaseResult[i]['_source']['lng'])
+            names.append(diseaseResult[i]['_source']['name'])
+            numbers.append(diseaseResult[i]['_source']['number'])
+
+        return render_template('index.html', id=session['userId'], milkpowderResult=milkpowderResult,
+                               diaperResult=diaperResult, toyResult=toyResult, snackResult=snackResult,
+                               names=names, numbers=numbers,
+                               lats=lats, lngs=lngs, diseaseList=diseaseList, diseaseCount=diseaseCount)
 
 
-@app.route('/', methods=['POST'])
-def advancedIndex():
-    global lat
-    global lng
 
-    type = request.form['term']
 
-    u_birthDate = User.query.filter_by(id=session['userId']).first().birthDate
-    y = u_birthDate.year
-    m = u_birthDate.month
-    d = u_birthDate.day
-    birth = datetime.datetime(y, m, d)
-    now = datetime.datetime.now()
-    u_age = int((now - birth).days / 30)
-
-    print(len(type))
-
-    if 0 <= u_age <= 23:
-        diseaseList = diseases[u_age]
-        diseaseCount = len(diseaseList)
-
-    diseaseResult = diseaseSearch(type, lat, lng)
-
-    lats = []
-    lngs = []
-    names = []
-    numbers = []
-
-    for item in diseaseResult:
-        lats.append(item['lat'])
-        lngs.append(item['lng'])
-        names.append(item['name'])
-        numbers.append(item['number'])
-
-    return render_template('index.html', id=session['userId'], diseaseList=diseaseList, diseaseCount=diseaseCount,
-                           do=True, lats=lats, lngs=lngs, names=names, numbers=numbers)
+# @app.route('/', methods=['POST'])
+# def advancedIndex():
+#     global lat
+#     global lng
+#
+#     type = request.form['term']
+#
+#     u_birthDate = User.query.filter_by(id=session['userId']).first().birthDate
+#     y = u_birthDate.year
+#     m = u_birthDate.month
+#     d = u_birthDate.day
+#     birth = datetime.datetime(y, m, d)
+#     now = datetime.datetime.now()
+#     u_age = int((now - birth).days / 30)
+#
+#     print(len(type))
+#
+#     if 0 <= u_age <= 23:
+#         diseaseList = diseases[u_age]
+#         diseaseCount = len(diseaseList)
+#
+#     diseaseResult = diseaseSearch(type, lat, lng)
+#
+#     lats = []
+#     lngs = []
+#     names = []
+#     numbers = []
+#
+#     for item in diseaseResult:
+#         lats.append(item['lat'])
+#         lngs.append(item['lng'])
+#         names.append(item['name'])
+#         numbers.append(item['number'])
+#
+#     return render_template('index.html', id=session['userId'], diseaseList=diseaseList, diseaseCount=diseaseCount,
+#                            do=True, lats=lats, lngs=lngs, names=names, numbers=numbers)
 
 
 @app.route('/search/<page>', methods=['GET', 'POST'])
@@ -742,7 +762,7 @@ def prefer():
         db.session.add(role)
         db.session.commit()
 
-        return redirect('/')
+        return render_template('index.html')
 
     return render_template('preference.html')
 
